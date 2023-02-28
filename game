@@ -1,0 +1,90 @@
+from microbit import *
+import random
+
+player_x = 4
+player_y = 2
+
+obj_x = 0
+obj_y = 2
+
+obj2_x = 0
+obj2_y = 2
+
+obj3_x = 0
+obj3_y = 4
+
+obj4_x = 0
+obj4_y = 1
+
+obj5_x = 0
+obj5_y = 3
+
+obj6_x = 0
+obj6_y = 0
+
+frame_count = 0
+score = 0
+
+frames_reset = 30
+
+while True:
+    
+    frame_count += 1
+    print (score)
+    
+
+    if frame_count == frames_reset:
+        obj_x += 1  
+        frame_count = 0
+        
+        
+    if obj_x > 4:
+        score += 1
+        frames_reset -= 2
+        obj_x = 0
+        obj_y = random.randint(0, 4)
+
+    if frames_reset < 10:
+        frames_reset = 10
+    
+
+
+    if button_b.was_pressed():
+        player_y += 1
+        
+    if button_a.was_pressed():
+        player_y -=1
+        
+    if player_y > 4:
+        player_y = 4
+
+    if player_y < 0:
+        player_y = 0
+
+    if player_y == obj_y and player_x == obj_x:
+        break
+        
+    display.clear()
+    display.set_pixel(player_x, player_y, 9)
+
+    display.set_pixel(obj_x, obj_y, 9)
+    
+    if frames_reset < 20:
+        display.set_pixel(obj2_x, obj2_y, 9)
+        
+    if frames_reset < 16:
+        display.set_pixel(obj3_x, obj3_y, 9)
+
+    if frames_reset < 12:
+        display.set_pixel(obj4_x, obj4_y, 9)
+
+    if frames_reset < 24:
+        display.set_pixel(obj5_x, obj5_y, 9)
+
+    if frames_reset < 28:
+        display.set_pixel(obj6_x, obj6_y, 9)
+        
+    sleep(33) 
+
+display.scroll("Game over")
+display.scroll("Score: " + str(score))
